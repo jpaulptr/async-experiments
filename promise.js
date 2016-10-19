@@ -26,4 +26,29 @@ router.get('/chained/:number', (req, res, err) => {
         });
 });
 
+
+router.get('/parallel/:number', (req, res, err) => {
+
+    async.getDataParallelOrdered(req.params['number'],
+        (value) => {           
+            res.send(`promise-parallel ${value}`);
+        },
+        (err) => {
+            console.log(err);
+            res.send(err)
+        });
+});
+
+router.get('/parallel-ordered/:number', (req, res, err) => {
+
+    async.getDataParallelUnordered(req.params['number'],
+        (value, callorder) => {           
+            res.send(`promise-parallel-ordered ${value} | call return order: ${callorder}`);
+        },
+        (err) => {
+            console.log(err);
+            res.send(err)
+        });
+});
+
 module.exports = router;

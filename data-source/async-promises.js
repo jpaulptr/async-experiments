@@ -36,10 +36,52 @@ module.exports = {
       const result = JSON.parse(value.body);
       //results.push(result.value);
       return result.value;
-    }).then((val) => {     
-     //callback(results);
-     callback(val);
+    }).then((val) => {
+      //callback(results);
+      callback(val);
     });
 
+  },
+
+  //Is this really parrallel?
+  getDataParallelOrdered(key, callback, err) {
+
+    const promises = [];
+
+    for (let i = 0; i < key; i++) {
+      promises.push(this.getPromise(i));
+    }
+
+    bluebird.all(promises)
+      .then((val) => {
+
+        const results = [];
+
+        for (let i = 0; i < val.length; i++) {
+          let parsed = JSON.parse(val[i].body);
+          results.push(parsed.value);
+        }
+
+        callback(results);
+      });
+
+  },
+
+  getDataParallelUnordered(key, callback, err) {
+
+    const promises = [];
+    const callOrder = [];
+
+    for (let i = 0; i < key; i++) {
+      promises.push(this.getPromise(i));
+    }
+
+    bluebird.map(promises, (value) => {
+      const result = JSON.parse(value.body);
+      callOrder.push(result.value);
+      return result.value;
+    }).then((val) => {
+      callback(val, callOrder);
+    });
   }
 };
