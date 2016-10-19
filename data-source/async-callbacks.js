@@ -2,7 +2,7 @@ const bluebird = require('bluebird');
 
 module.exports = {
 
-  //Basic call call back async
+  //Basic call back async
   getData: (key, callback) => {
 
     const multiplier = parseInt(Math.random() * 10) * key;
