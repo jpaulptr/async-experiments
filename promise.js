@@ -51,4 +51,16 @@ router.get('/parallel-ordered/:number', (req, res, err) => {
         });
 });
 
+router.get('/race/:number', (req, res, err) => {
+
+    async.getDataRace(req.params['number'],
+        (value) => {           
+            res.send(`promise-race ${value}`);
+        },
+        (err) => {
+            console.log(err);
+            res.send(err)
+        });
+});
+
 module.exports = router;

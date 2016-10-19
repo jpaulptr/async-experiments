@@ -83,5 +83,23 @@ module.exports = {
     }).then((val) => {
       callback(val, callOrder);
     });
+  },
+
+  getDataRace(key, callback, err) {
+
+    const promises = [];
+
+    for (let i = 1; i < key; i++) {
+      promises.push(this.getPromise(i));
+    }
+
+    bluebird.any(promises)
+      .then((val) => {
+
+        let parsed = JSON.parse(val.body);
+        callback(parsed.value);
+        
+      });
   }
+
 };
