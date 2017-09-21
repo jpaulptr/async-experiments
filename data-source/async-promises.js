@@ -4,11 +4,12 @@ const bluebird = require('bluebird');
 
 module.exports = {
 
-  getPromise(key) {
-
+  getPromise(key, time) {
+    const timeValue = time || key;
     
     return new Promise((resolve, reject) => {
-      setTimeout(() => resolve(key), Math.floor(100 * key * Math.random()));
+      const multiplier = parseInt(Math.random() * 10) * timeValue;
+      setTimeout(() => resolve(key + key), multiplier);
     });
   },
 
@@ -23,9 +24,7 @@ module.exports = {
   //Get chained data. 
   //Each request has to finish before it will return
   getDataChained(key, callback, err) {
-
     const promises = [];
-    //const results = [];
 
     for (let i = 0; i < key; i++) {
       promises.push(this.getPromise(i));
@@ -49,14 +48,7 @@ module.exports = {
 
     bluebird.all(promises)
       .then((val) => {
-
-        const results = [];
-
-        for (let i = 0; i < val.length; i++) {
-          results.push(val[i]);
-        }
-
-        callback(results);
+        callback(val);
       });
 
   },

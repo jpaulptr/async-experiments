@@ -25,10 +25,10 @@ async.getDataParallelOrdered(5,
     });
 
 async.getDataParallelUnordered(5,
-    (number) => {
+    (number, callOrder) => {
     console.log(`--Promise parallel unordered result:
     seed: 5
-    value: ${number}`);
+    value: ${callOrder}`);
     });    
 
 async.getDataRace(5, (number) => {
@@ -37,45 +37,3 @@ async.getDataRace(5, (number) => {
     value: ${number}`);
 });
       
-
-/*
-    
-    router.get('/parallel/:number', (req, res, err) => {
-    
-        async.getDataParallelOrdered(req.params['number'],
-            (value) => {           
-                res.send(`promise-parallel ${value}`);
-            },
-            (err) => {
-                console.log(err);
-                res.send(err)
-            });
-    });
-    
-    router.get('/parallel-ordered/:number', (req, res, err) => {
-    
-        async.getDataParallelUnordered(req.params['number'],
-            (value, callorder) => {           
-                res.send(`promise-parallel-ordered ${value} | call return order: ${callorder}`);
-            },
-            (err) => {
-                console.log(err);
-                res.send(err)
-            });
-    });
-    
-    router.get('/race/:number', (req, res, err) => {
-    
-        async.getDataRace(req.params['number'],
-            (value) => {           
-                res.send(`promise-race ${value}`);
-            },
-            (err) => {
-                console.log(err);
-                res.send(err)
-            });
-    });
-    
-    module.exports = router;
-
-    */
