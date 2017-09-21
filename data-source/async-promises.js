@@ -1,14 +1,15 @@
 const bluebird = require('bluebird');
-const request = bluebird.promisifyAll(require('request'));
+
 
 
 module.exports = {
 
   getPromise(key) {
-    return request.getAsync(
-      {
-        url: `http://localhost:3000/promise-mock/basic/${key}`
-      });
+
+    
+    return new Promise((resolve, reject) => {
+      setTimeout(() => resolve(key), Math.floor(100 * key * Math.random()));
+    });
   },
 
   //Basic promise async
@@ -16,8 +17,6 @@ module.exports = {
 
     this.getPromise(key).then((response) => {
       callback(response);
-    }).catch((error) => {
-      err(error);
     });
   },
 
@@ -33,17 +32,13 @@ module.exports = {
     }
 
     bluebird.mapSeries(promises, (value) => {
-      const result = JSON.parse(value.body);
-      //results.push(result.value);
-      return result.value;
+      return value;
     }).then((val) => {
-      //callback(results);
       callback(val);
     });
 
   },
 
-  //Is this really parrallel?
   getDataParallelOrdered(key, callback, err) {
 
     const promises = [];
@@ -58,8 +53,7 @@ module.exports = {
         const results = [];
 
         for (let i = 0; i < val.length; i++) {
-          let parsed = JSON.parse(val[i].body);
-          results.push(parsed.value);
+          results.push(val[i]);
         }
 
         callback(results);
@@ -77,9 +71,8 @@ module.exports = {
     }
 
     bluebird.map(promises, (value) => {
-      const result = JSON.parse(value.body);
-      callOrder.push(result.value);
-      return result.value;
+      callOrder.push(value);
+      return value;
     }).then((val) => {
       callback(val, callOrder);
     });
@@ -94,11 +87,8 @@ module.exports = {
     }
 
     bluebird.any(promises)
-      .then((val) => {
-
-        let parsed = JSON.parse(val.body);
-        callback(parsed.value);
-        
+      .then((val) => {        
+        callback(val);
       });
   }
 

@@ -1,18 +1,14 @@
 {
   "name": "async-experiments",
   "version": "1.0.0",
-  "description": "Experimenting async coding in node",
+  "description": "Experimenting with async coding",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/.bin/nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.4.6",
-    "express": "^4.14.0",
-    "nodemon": "^1.11.0",
-    "request": "^2.75.0"
+    "bluebird": "^3.4.6"
   }
 }

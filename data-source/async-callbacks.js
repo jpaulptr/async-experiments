@@ -9,7 +9,7 @@ module.exports = {
 
     setTimeout(() => {
       callback(key + key);
-    }, multiplier * 50);
+    }, multiplier * 20);
   },
 
   //Get chained data. 
