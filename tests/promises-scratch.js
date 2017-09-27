@@ -1,8 +1,8 @@
-const async = require('../data-source/async-promises');
+const async = require('../data-source/async-promises-scratch');
 
 console.log(
     `--------------------------
--- Running promise using bluebird tests
+-- Running promise written from scratch tests
 --------------------------`);
 
 async.getData(1, (result) => {
@@ -18,18 +18,18 @@ async.getDataChained(5, (number) => {
 });
 
 async.getDataParallelOrdered(5,
-    (number) => {
-    console.log(`--Promise parallel ordered result:
-    seed: 5
-    value: ${number}`);
-    });
-
-async.getDataParallelUnordered(5,
     (number, callOrder) => {
-    console.log(`--Promise parallel unordered result:
+    console.log(`--Promise ordered result:
     seed: 5
     value: ${callOrder}`);
-    });    
+    });   
+
+async.getDataParallelUnordered(5,
+    (number) => {
+    console.log(`--Promise parallel unordered result:
+    seed: 5
+    value: ${number}`);
+    }); 
 
 async.getDataRace(5, (number) => {
     console.log(`--Promise race result:

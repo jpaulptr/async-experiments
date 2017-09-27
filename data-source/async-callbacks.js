@@ -1,5 +1,3 @@
-const bluebird = require('bluebird');
-
 module.exports = {
 
   //Basic call back async
