@@ -54,7 +54,7 @@ module.exports = {
     },
 
 
-    getDataParallelUnordered(key, callback, err) {
+    getDataParallelUnordered(key, callback) {
 
         const promises = [];
 
